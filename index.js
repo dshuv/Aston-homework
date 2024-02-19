@@ -2,11 +2,13 @@
 // Basic
 function getLength(value) {
   if (typeof value === "string" || Array.isArray(value)) {
-    return value.length;
+    console.log(value.length);
+  } else if (value instanceof Map || value instanceof Set) {
+    console.log(value.size);
   } else if (value && typeof value === "object" && "length" in value) {
-    return value.length;
+    console.log(value.length);
   } else {
-    return 0;
+    console.log(0);
   }
 }
 

@@ -45,8 +45,15 @@
 // }
 
 // function bind(fn, context, ...rest) {
-//   return function (...args) {
-//     return fn.apply(context, rest.concat(args));
+//   return function () {
+//     if (typeof fn !== "function") {
+//       console.log(`${this} не функция`);
+//     }
+//     const uniqueId = Date.now().toString();
+//     context[uniqueId] = fn;
+//     const result = context[uniqueId](...rest);
+//     delete context[uniqueId];
+//     return result;
 //   };
 // }
 

@@ -1,131 +1,105 @@
 // Basic
 
-// 1. Перечислить какие бывают алгоритмы сортировок?
-
-// Виды алгоритмов сортировки :
-// 1) Сортировка пузырьком
-// 2) Сортировка выбором
-// 3) Циклическая сортировка
-// 4) Быстрая сортировка
-// 5) Сортировка слиянием
-
-
-
-// 2.Создать объект Person несколькими способами, после создать объект AnotherPerson,
-// чтобы в нём были доступны методы объекта Person.Добавить метод logInfo чтоб он был доступен всем объектам.
-
-// - C помощью класса
-// class Person {
-//   constructor(name, age) {
-//     this.name = name;
-//     this.age = age;
-//   }
-//   logInfo(){
-//     console.log(`Name: ${this.name},age: ${this.age}`)
-//   }
-// };
-// const anotherPerson = new Person('Danila',22)
-
-// - C помощью Object.setPrototypeOf
-// const person = {
-//   name: "Kirill",
-//   age: 21,
-//   logInfo() {
-//     console.log(`Name: ${this.name}, Age: ${this.age}`)
-//   }
-// };
-// const anotherPerson = {};
-// Object.setPrototypeOf(anotherPerson,person);
-// anotherPerson.logInfo()
-
-// - С помощью Prototype
-// function Person(name, age) {
-//    this.name = name;
-//    this.age = age;
+// Написать порядок и вывод в консоли:
+// 1.
+// console.log('1');
+// setTimeout(() => console.log('2'), 1);
+// let promiseNew = new Promise((resolve) => {
+// console.log('3');
+// resolve();
+// });
+// promiseNew.then(() => console.log('4'));
+// setTimeout(() => console.log('5'));
+// console.log('6');
+//
+// Output: 1,3,6,4,5,2
+//
+//
+// 2.
+// let promiseTree = new Promise((resolve, reject) => {
+//   resolve("a");
+//   console.log("1");
+//   setTimeout(() => {
+//     console.log("2");
+//   }, 0);
+//   console.log("3");
+// });
+//
+// Output: 1,3,2
+//
+//
+// 3.
+// let promiseTwo = new Promise((resolve, reject) => {
+//   resolve("a");
+// });
+// promiseTwo
+//   .then((res) => {
+//     return res + "b";
+//   })
+//   .then((res) => {
+//     return res + "с";
+//   })
+//   .finally((res) => {
+//     return res + "!!!!!!!";
+//   })
+//   .catch((res) => {
+//     return res + "d";
+//   })
+//   .then((res) => {
+//     console.log(res);
+//   });
+//
+// Output: abc
+//
+//
+// 4.
+// function doSmth() {
+//   return Promise.resolve("123");
 // }
+// doSmth()
+//   .then(function (a) {
+//     console.log("1", a); //
+//     return a;
+//   })
+//   .then(function (b) {
+//     console.log("2", b);
+//     return Promise.reject("321");
+//   })
+//   .catch(function (err) {
+//     console.log("3", err);
+//   })
+//   .then(function (c) {
+//     console.log("4", c);
+//     return c;
+//   });
 //
-// const anotherPerson = Object.create(Person.prototype);
+// Output: 1 123, 2 123, 3 321, 4 undefined
 //
-// anotherPerson.name = 'Max';
-// anotherPerson.age = 20;
 //
-// Person.prototype.logInfo = function() {
-//   console.log(`Name: ${this.name}, Age: ${this.age}`);
-// };
+// 5.
+// console.log("1");
+// setTimeout(function () {
+//   console.log("2");
+// }, 0);
+// Promise.resolve().then(() => console.log("3"));
+// console.log("4");
 //
-// anotherPerson.logInfo();
-
-// - C помощью __proto__
-// const person = {
-//   name: 'Evgeniy',
-//   age: 18,
-//   logInfo(){
-//     console.log(`Name: ${this.name}, Age: ${this.age}`)
-//   },
-// }
-//
-// const anotherPerson = {};
-//
-// anotherPerson.__proto__ = person;
-//
-// anotherPerson.logInfo()
-
-
-// 3. Создать класс SuperPerson c get и set для поля name и конструктором,сделать класс наследник от класса SuperPerson.
-
-// class SuperPerson {
-//   constructor(name) {
-//     this.name = name;
-//   }
-
-//   get getName() {
-//     return this.name;
-//   }
-
-//   set setName(value) {
-//     if (typeof value === "string") {
-//       return (this.name = value);
-//     }
-//     console.log(`${value} not a name!`);
-//   }
-// }
-
-// class NotSuperPerson extends SuperPerson {
-//   constructor(name) {
-//     super(name);
-//   }
-// }
-
-// const person = new SuperPerson("Danila");
-// person.setName = "Stas";
-// console.log(person.getName);
+// Output: 1,4,3,2
 
 
 // Advanced
 
-// 1.Написать функцию которая вернет массив с первой парой чисел, сумма которых равна total
+// Напишите функцию, которая будет проходить через массив целых чисел и выводить индекс каждого элемента с задержкой в 3 секунды.
 
-// function firstSum (arr, total)  {
-//   for (let i = 0; i < arr.length; i++) {
-//     for(let j = i+1; j < arr.length;j++){
-//       if (arr[i] + arr[j] === total){
-//         return [arr[i],arr[j]]
-//       }
-//     }
+// function showIndexOfElement(arr) {
+//   if (arr.every(Number.isInteger)) {
+//     return arr.forEach((el, index) =>
+//       setTimeout(() => {
+//         console.log(`Index: ${index}, Value: ${el}`);
+//       }, index * 3000)
+//     );
 //   }
-//   console.log('There are no such values in the array!')
-// };
-//
-// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-//
-// const total = 13;
-//
-// firstSum(arr, total) //result = [4, 9]
-
-
-// 2. Оценить сложность вашего алгоритма для функции firstSum
-
-// Сложность алгоритма функции firstSum  является - O(n^2).
-// Считается , что ее стоит избегать , но я реализовал эту функцию таким способом.
-// Почему сложность алгоритма O(n^2)? - Потому что этот алгоритм можно оценить как квадратичную сложность,
-// так как он использует два вложенных цикла for, каждый из которых проходит по всему массиву.
+//   return console.log("Not all elements of integers!");
+// }
+// const arr = [1, 2, 3, 42];
+// showIndexOfElement(arr);

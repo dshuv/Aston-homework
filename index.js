@@ -1,61 +1,131 @@
 // Basic
 
-// 1  Почему массивы в JS являются "неправильными" и совмещают в себе несколько структур данных? Какие ?
+// 1. Перечислить какие бывают алгоритмы сортировок?
 
-// Особенности массивом из-за которых их можно считать 'неправильными' это :
-// 1) Они могут содержать в себе значения разных типов данных
-// 2) Они динамически расширяются при добавлении новых элементов
-// 3) Совмещают в себе такие структуры данных как stack или queue :
-//    Stack - при использовании таких методов массива как pop/push (удалить элемента с конца массива , добавить в конец массива)
-//    Queue -  при использовании таких методов массива как shift/push (удалить элемента с начала массива , добавить в конец массива)
-// 4) Могут содержать не только числовые индексы , но и строки в качестве индекса
-// 5) Так как массив это специальный тип объекта , он так же может иметь свойства и методы
+// Виды алгоритмов сортировки :
+// 1) Сортировка пузырьком
+// 2) Сортировка выбором
+// 3) Циклическая сортировка
+// 4) Быстрая сортировка
+// 5) Сортировка слиянием
 
 
-// 2 Привязать контекст объекта к функции так,
-// чтобы при вызове функции ${this.item} имело значение - 'some value'(Привязать через bind, call, apply)
 
-// const obj = { item: "some value" };
+// 2.Создать объект Person несколькими способами, после создать объект AnotherPerson,
+// чтобы в нём были доступны методы объекта Person.Добавить метод logInfo чтоб он был доступен всем объектам.
 
-// function logger(obj) {
-//   console.log(`I output only external context: ${this.item}`);
+// - C помощью класса
+// class Person {
+//   constructor(name, age) {
+//     this.name = name;
+//     this.age = age;
+//   }
+//   logInfo(){
+//     console.log(`Name: ${this.name},age: ${this.age}`)
+//   }
+// };
+// const anotherPerson = new Person('Danila',22)
+
+// - C помощью Object.setPrototypeOf
+// const person = {
+//   name: "Kirill",
+//   age: 21,
+//   logInfo() {
+//     console.log(`Name: ${this.name}, Age: ${this.age}`)
+//   }
+// };
+// const anotherPerson = {};
+// Object.setPrototypeOf(anotherPerson,person);
+// anotherPerson.logInfo()
+
+// - С помощью Prototype
+// function Person(name, age) {
+//    this.name = name;
+//    this.age = age;
+// }
+//
+// const anotherPerson = Object.create(Person.prototype);
+//
+// anotherPerson.name = 'Max';
+// anotherPerson.age = 20;
+//
+// Person.prototype.logInfo = function() {
+//   console.log(`Name: ${this.name}, Age: ${this.age}`);
+// };
+//
+// anotherPerson.logInfo();
+
+// - C помощью __proto__
+// const person = {
+//   name: 'Evgeniy',
+//   age: 18,
+//   logInfo(){
+//     console.log(`Name: ${this.name}, Age: ${this.age}`)
+//   },
+// }
+//
+// const anotherPerson = {};
+//
+// anotherPerson.__proto__ = person;
+//
+// anotherPerson.logInfo()
+
+
+// 3. Создать класс SuperPerson c get и set для поля name и конструктором,сделать класс наследник от класса SuperPerson.
+
+// class SuperPerson {
+//   constructor(name) {
+//     this.name = name;
+//   }
+
+//   get getName() {
+//     return this.name;
+//   }
+
+//   set setName(value) {
+//     if (typeof value === "string") {
+//       return (this.name = value);
+//     }
+//     console.log(`${value} not a name!`);
+//   }
 // }
 
-// bind
-// const showResult = logger.bind(obj);
-// showResult();
+// class NotSuperPerson extends SuperPerson {
+//   constructor(name) {
+//     super(name);
+//   }
+// }
 
-// call
-// logger.call(obj);
-
-// apply
-// logger.apply(obj);
+// const person = new SuperPerson("Danila");
+// person.setName = "Stas";
+// console.log(person.getName);
 
 
 // Advanced
 
-// 3 Реализовать полифил (собственную функцию реализующую встроенную в js) метода bind()
+// 1.Написать функцию которая вернет массив с первой парой чисел, сумма которых равна total
 
-// const person = {
-//   name: "Danila",
-// };
-
-// function greeting() {
-//   console.log(`Hello ${this.name}!`);
-// }
-
-// function bind(fn, context, ...rest) {
-//   return function () {
-//     if (typeof fn !== "function") {
-//       console.log(`${this} не функция`);
+// function firstSum (arr, total)  {
+//   for (let i = 0; i < arr.length; i++) {
+//     for(let j = i+1; j < arr.length;j++){
+//       if (arr[i] + arr[j] === total){
+//         return [arr[i],arr[j]]
+//       }
 //     }
-//     const uniqueId = Date.now().toString();
-//     context[uniqueId] = fn;
-//     const result = context[uniqueId](...rest);
-//     delete context[uniqueId];
-//     return result;
-//   };
-// }
+//   }
+//   console.log('There are no such values in the array!')
+// };
+//
+// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//
+// const total = 13;
+//
+// firstSum(arr, total) //result = [4, 9]
 
-// const result = bind(greeting, person);
-// result();
+
+// 2. Оценить сложность вашего алгоритма для функции firstSum
+
+// Сложность алгоритма функции firstSum  является - O(n^2).
+// Считается , что ее стоит избегать , но я реализовал эту функцию таким способом.
+// Почему сложность алгоритма O(n^2)? - Потому что этот алгоритм можно оценить как квадратичную сложность,
+// так как он использует два вложенных цикла for, каждый из которых проходит по всему массиву.

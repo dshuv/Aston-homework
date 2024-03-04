@@ -96,7 +96,7 @@
 //     return arr.forEach((el, index) =>
 //       setTimeout(() => {
 //         console.log(`Index: ${index}, Value: ${el}`);
-//       }, index * 3000)
+//       }, (index + 1) * 3000)
 //     );
 //   }
 //   return console.log("Not all elements of integers!");

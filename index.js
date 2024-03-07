@@ -3,6 +3,9 @@
 // Написать функцию pattern, принимающую на вход число n и возвращающую в консоли паттерн
 
 // function pattern(n) {
+// if (typeof n !== "number" || n < 0) {
+//   return null;
+// }
 //   for (let i = 1; i <= n; i++) {
 //     let str = "";
 //     for (let j = 1; j <= n - i; j++) {

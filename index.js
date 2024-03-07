@@ -1,105 +1,88 @@
 // Basic
 
-// Написать порядок и вывод в консоли:
-// 1.
-// console.log('1');
-// setTimeout(() => console.log('2'), 1);
-// let promiseNew = new Promise((resolve) => {
-// console.log('3');
-// resolve();
-// });
-// promiseNew.then(() => console.log('4'));
-// setTimeout(() => console.log('5'));
-// console.log('6');
-//
-// Output: 1,3,6,4,5,2
-//
-//
-// 2.
-// let promiseTree = new Promise((resolve, reject) => {
-//   resolve("a");
-//   console.log("1");
-//   setTimeout(() => {
-//     console.log("2");
-//   }, 0);
-//   console.log("3");
-// });
-//
-// Output: 1,3,2
-//
-//
-// 3.
-// let promiseTwo = new Promise((resolve, reject) => {
-//   resolve("a");
-// });
-// promiseTwo
-//   .then((res) => {
-//     return res + "b";
-//   })
-//   .then((res) => {
-//     return res + "с";
-//   })
-//   .finally((res) => {
-//     return res + "!!!!!!!";
-//   })
-//   .catch((res) => {
-//     return res + "d";
-//   })
-//   .then((res) => {
-//     console.log(res);
-//   });
-//
-// Output: abc
-//
-//
-// 4.
-// function doSmth() {
-//   return Promise.resolve("123");
+// Написать функцию pattern, принимающую на вход число n и возвращающую в консоли паттерн
+
+// function pattern(n) {
+// if (typeof n !== "number" || n < 0) {
+//   return null;
 // }
-// doSmth()
-//   .then(function (a) {
-//     console.log("1", a); //
-//     return a;
-//   })
-//   .then(function (b) {
-//     console.log("2", b);
-//     return Promise.reject("321");
-//   })
-//   .catch(function (err) {
-//     console.log("3", err);
-//   })
-//   .then(function (c) {
-//     console.log("4", c);
-//     return c;
-//   });
-//
-// Output: 1 123, 2 123, 3 321, 4 undefined
-//
-//
-// 5.
-// console.log("1");
-// setTimeout(function () {
-//   console.log("2");
-// }, 0);
-// Promise.resolve().then(() => console.log("3"));
-// console.log("4");
-//
-// Output: 1,4,3,2
+//   for (let i = 1; i <= n; i++) {
+//     let str = "";
+//     for (let j = 1; j <= n - i; j++) {
+//       str += " ";
+//     }
+//     for (let j = 1; j <= i; j++) {
+//       str += j;
+//     }
+//     for (let j = i - 1; j >= 1; j--) {
+//       str += j;
+//     }
+//     console.log(str);
+//   }
+
+//   for (let i = n - 1; i >= 1; i--) {
+//     let str = "";
+//     for (let j = 1; j <= n - i; j++) {
+//       str += " ";
+//     }
+//     for (let j = 1; j <= i; j++) {
+//       str += j;
+//     }
+//     for (let j = i - 1; j >= 1; j--) {
+//       str += j;
+//     }
+//     console.log(str);
+//   }
+// }
+
+// pattern(5);
 
 
 // Advanced
 
-// Напишите функцию, которая будет проходить через массив целых чисел и выводить индекс каждого элемента с задержкой в 3 секунды.
+// Написать класс PaginationUtil. Класс принимает массив значений (типы не имеют значения) и число,отображающее количество элементов на странице.
+// Пример реализации:
+// helper.pageItemCount(0); // 4
+// helper.pageItemCount(1); // на последней странице - 2
+// helper.pageItemCount(2); // -1, так как такой страницы нет
+// pageIndex - принимает индекс элемента в массиве значений и возвращает его страницу, иначе -1
+// helper.pageIndex(5); // 1
+// helper.pageIndex(2); // 0
+// helper.pageIndex(20); // -1
+// helper.pageIndex(-10); //-1
 
-// function showIndexOfElement(arr) {
-//   if (arr.every(Number.isInteger)) {
-//     return arr.forEach((el, index) =>
-//       setTimeout(() => {
-//         console.log(`Index: ${index}, Value: ${el}`);
-//       }, (index + 1) * 3000)
-//     );
+
+// class PaginationUtil {
+//   constructor(arr, itemsNum) {
+//     this.arr = arr;
+//     this.itemsNum = itemsNum;
 //   }
-//   return console.log("Not all elements of integers!");
+
+//   pageCount() {
+//     return Math.ceil(this.arr.length / this.itemsNum);
+//   }
+
+//   itemCount() {
+//     return this.arr.length;
+//   }
+
+//   pageItemCount(pageIndex) {
+//     if (pageIndex < 0 || pageIndex >= this.pageCount()) {
+//       return -1;
+//     }
+//     if (pageIndex === this.pageCount() - 1) {
+//       return this.arr.length % this.itemsNum;
+//     }
+//     return this.itemsNum;
+//   }
+//   pageIndex(index) {
+//     if (index < 0 || index >= this.arr.length) {
+//       return -1;
+//     }
+//     return Math.floor(index / this.itemsNum);
+//   }
 // }
-// const arr = [1, 2, 3, 42];
-// showIndexOfElement(arr);
+
+// const helper = new PaginationUtil(["a", "b", "c", "d", "e", "f"], 4);
+
+
